@@ -8,12 +8,13 @@
     <language>en</language>
     <lastBuildDate>Sat, 30 Jan 2021 16:01:12 +0100</lastBuildDate><atom:link href="https://codesharerepeat.github.io/categories/tools/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>PC to mac - a dotnet developers experience</title>
+      <title>Switching from pc to mac</title>
       <link>https://codesharerepeat.github.io/post/pctomac/</link>
       <pubDate>Sat, 30 Jan 2021 16:01:12 +0100</pubDate>
       
       <guid>https://codesharerepeat.github.io/post/pctomac/</guid>
-      <description>I&amp;rsquo;m a developer in the microsoft ecosystem but I prefere Apple hardware. This has always been a problem - I had to run windows on mac, using bootcamp etc. - just to use VS Studio with .</description>
+      <description>I&amp;rsquo;m a developer in the microsoft ecosystem but I prefere Apple hardware, and since microsoft introduced .NET 5 it is easy to work on your project using a mac.
+This post shall describe you my experience regarding the switch from pc to mac, while the rest of the development team is working with a pc.</description>
     </item>
     
   </channel>

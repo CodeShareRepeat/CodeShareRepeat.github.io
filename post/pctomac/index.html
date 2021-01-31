@@ -154,13 +154,13 @@
                 
             </div>
 
-            <p>I&rsquo;m a developer in the microsoft ecosystem but I prefere Apple hardware, and since microsoft introduced .NET 5 it is easy to work on your project using a mac.</p>
+            <p>I&rsquo;m a developer in the Microsoft ecosystem but I prefer Apple hardware, and since Microsoft introduced .NET 5 it is easy to work on your project using a mac.</p>
 <p>This post shall describe you my experience regarding the switch from pc to mac, while the rest of the development team is working with a pc.</p>
 <h2 id="visual-studio-for-mac">visual studio for mac</h2>
 <p>It works fine and is a very good idee. a lot of details are much better than in the windows version - but I noticed the some points I want to share.</p>
 <h4 id="shortcuts">Shortcuts</h4>
 <p>Microsoft wants to give you the same “shortcut” experience like in windows – this makes things easy.</p>
-<p>Out of the box, the 2 most important one’s work:  <code>ctrl + .</code> and <code>ctrl+ space</code>(these 2 I use the most)</p>
+<p>Out of the box, the 2 most important one’s work:  &ldquo;<code>ctrl + .</code>&rdquo; and &ldquo;<code>ctrl + space</code>&rdquo; (these 2 I use the most)</p>
 <p>What is a bit wired, is the fact that within visual studio for mac copy/paste/select-all is <code>ctrl c/v/a</code>  while it is in the rest of the mac world <code>cmd c/v/a</code>.</p>
 <h4 id="cr--lf">CR / LF</h4>
 <p>Your “pc teammates” will recognize, that files you’ve created have different line endings, because when they open your files, they see this <a href="https://docs.microsoft.com/de-de/visualstudio/ide/encodings-and-line-breaks?view=vs-2019">visual studio info</a>.</p>
@@ -170,32 +170,32 @@
 <h4 id="project-files">Project Files</h4>
 <p>Sometimes VS for mac adds information to the .csproj file. For example, if you add a File to your project, VS for mac adds a whole new “Itemgroup” which is really not necessary – this is annoying when it comes to a Pull Request and you have to revert changes to the .csproj files</p>
 <h4 id="git-support">Git Support</h4>
-<p>The git support in VS for mac ist ok (but nothing more).</p>
-<p>But one thing realy grinds my gears! If you switch the branch, lets say from &ldquo;develop&rdquo; to &ldquo;feature/xy&rdquo; VS Studio for Mac still shows that you are working on developement.</p>
-<p>This is really anoying and hopfully fixed in on of the upcomming releases.</p>
-<p>Therefore I work with the git cli.</p>
+<p>The git support in VS for mac is ok (but nothing more).</p>
+<p>But one thing really grinds my gears! If you switch the branch, let’s say from &ldquo;develop&rdquo; to &ldquo;feature/xy&rdquo; VS Studio for Mac still shows that you are working on development.</p>
+<p>This is really annoying and hopefully fixed in one of the upcoming releases.</p>
+<p>Therefore, I work with the git cli.</p>
 <h4 id="extensions">Extensions</h4>
 <p>… nothing to see here …</p>
 <p>There are very few visual studio for mac extensions - but my beloved CodeMaid and R# are not available for mac.</p>
 <h2 id="console--terminal">Console / Terminal</h2>
-<p>I heavily use the console for git or dotnet commands – mostly just for fun (it feels so “hacky”). On mac, the console is different.</p>
+<p>I heavily use the console for git or dotnet commands – mostly just for fun (it feels so “hacky”). On mac, the console is a bit different.</p>
 <h4 id="case-sensitivity">Case sensitivity</h4>
 <p>It is cases sensitive by default. ‘DOTENET’ and ‘dotnet’ works the same, but ‘cd Projects’ and ‘cd projects’ are 2 different things.</p>
-<h4 id="console-startup">Console startup</h4>
-<p>What I loved the most in windows, you can navigate to every folder (using the file explorer) and just type in {{cmd}} and the console starts within the folder. On mac, not possible (or I just did not find it out).</p>
+<h4 id="console-start-up">Console start-up</h4>
+<p>What I loved the most in windows, you can navigate to every folder (using the file explorer) and just type in ‘cmd’ and the console starts within the folder. On mac, you have to click on a folder, and then select ‘show in terminal’…</p>
 <h4 id="the-backslash">the backslash</h4>
-<p>One of the most onying things when switching from pc to mac is the <code>backslash</code> issue.
-Imagine your working a lot with cli commands, which includes folder structures, there is a difference between mac and pc.</p>
+<p>One of the most annoying things when switching from pc to mac is the <code>backslash</code> issue.
+Imagine you’re working a lot with cli commands, which includes folder structures, there is a difference between mac and pc.</p>
 <p>Windows: <code>cmd-something .\MyFolder\MyFile.txt</code></p>
 <p>Mac  OS: <code>cmd-something ./MyFolder/MyFile.txt</code></p>
-<p>I struggeld with this a lot, but now I&rsquo;m used to it.</p>
+<p>I struggled with this a lot, but now I&rsquo;m used to it.</p>
 <h2 id="docker">Docker</h2>
-<p>Docker is the thing on a mac. It simply works – on windows I always had struggles with my local docker container but on a mac it just works.</p>
+<p>Docker is the thing on a mac. It simply works – on windows I always struggled with my local docker instance but on mac - it just works.</p>
 <p>And I&rsquo;m using it much more than on a windows machine.</p>
 <p>Sometimes I need a SQL server locally (I know it could be on Azure) – therefore I use docker.</p>
 <p>Using a mac somehow forced me into docker (for running windows tools like SQL) that now, I use it for everything, everywhere. That’s a pretty cool side effect.</p>
 <h1 id="conclusion">Conclusion</h1>
-<p>Yes, I would do it again! after 15 pc-years in professional software development I realy enjoy the mac wold.</p>
+<p>Yes, I would do it again! after 15 pc-years in professional software development I really enjoy the mac world.</p>
 <p>That&rsquo;s all for now.</p>
 <p>happy coding.</p>
 </div>

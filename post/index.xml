@@ -17,5 +17,15 @@
 This post shall describe you my experience regarding the switch from pc to mac, while the rest of the development team is working with a pc.</description>
     </item>
     
+    <item>
+      <title>Part 2 Logging: Correlation-ID with ASP.NET Core WebApi and NLog</title>
+      <link>https://codesharerepeat.github.io/post/aspdotnetcorelogging/correlationid/</link>
+      <pubDate>Sun, 10 Jan 2021 21:05:04 +0100</pubDate>
+      
+      <guid>https://codesharerepeat.github.io/post/aspdotnetcorelogging/correlationid/</guid>
+      <description>A correlation ID is mostly the same like an transaction-id in the SQL World. I use it for logging and error analysis.
+ Whithout a correlation id you are totaly lost in your log!</description>
+    </item>
+    
   </channel>
 </rss>

@@ -3,8 +3,58 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://codesharerepeat.github.io/tags/apnetcore-web-api/</loc>
+    <lastmod>2021-02-07T21:05:04+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://codesharerepeat.github.io/categories/</loc>
-    <lastmod>2021-01-30T16:01:12+01:00</lastmod>
+    <lastmod>2021-02-07T21:05:04+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codesharerepeat.github.io/categories/coding/</loc>
+    <lastmod>2021-02-07T21:05:04+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codesharerepeat.github.io/tags/dotnetcore/</loc>
+    <lastmod>2021-02-07T21:05:04+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codesharerepeat.github.io/categories/logging/</loc>
+    <lastmod>2021-02-07T21:05:04+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codesharerepeat.github.io/tags/nlog/</loc>
+    <lastmod>2021-02-07T21:05:04+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codesharerepeat.github.io/post/</loc>
+    <lastmod>2021-02-07T21:05:04+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codesharerepeat.github.io/tags/</loc>
+    <lastmod>2021-02-07T21:05:04+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codesharerepeat.github.io/post/aspdotnetcorelogging/correlationid/</loc>
+    <lastmod>2021-02-07T21:05:04+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codesharerepeat.github.io/</loc>
+    <lastmod>2021-02-07T21:05:04+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codesharerepeat.github.io/post/aspdotnetcorelogging/setupwithnlog/</loc>
+    <lastmod>2021-02-05T15:47:52+01:00</lastmod>
   </url>
   
   <url>
@@ -18,11 +68,6 @@
   </url>
   
   <url>
-    <loc>https://codesharerepeat.github.io/post/</loc>
-    <lastmod>2021-01-30T16:01:12+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://codesharerepeat.github.io/post/pctomac/</loc>
     <lastmod>2021-01-30T16:01:12+01:00</lastmod>
   </url>
@@ -30,36 +75,6 @@
   <url>
     <loc>https://codesharerepeat.github.io/categories/tools/</loc>
     <lastmod>2021-01-30T16:01:12+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://codesharerepeat.github.io/</loc>
-    <lastmod>2021-01-30T16:01:12+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://codesharerepeat.github.io/categories/coding/</loc>
-    <lastmod>2021-01-10T21:05:04+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://codesharerepeat.github.io/tags/dotnet-core/</loc>
-    <lastmod>2021-01-10T21:05:04+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://codesharerepeat.github.io/post/aspdotnetcorelogging/correlationid/</loc>
-    <lastmod>2021-01-10T21:05:04+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://codesharerepeat.github.io/tags/</loc>
-    <lastmod>2021-01-10T21:05:04+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://codesharerepeat.github.io/tags/web-api/</loc>
-    <lastmod>2021-01-10T21:05:04+01:00</lastmod>
   </url>
   
 </urlset>

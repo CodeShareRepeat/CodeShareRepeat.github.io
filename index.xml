@@ -6,7 +6,27 @@
     <description>Recent content on Website of Chris König</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 30 Jan 2021 16:01:12 +0100</lastBuildDate><atom:link href="https://codesharerepeat.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 07 Feb 2021 21:05:04 +0100</lastBuildDate><atom:link href="https://codesharerepeat.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WebApi Logging Part 2: Correlation-ID with ASP.NET Core WebApi and NLog</title>
+      <link>https://codesharerepeat.github.io/post/aspdotnetcorelogging/correlationid/</link>
+      <pubDate>Sun, 07 Feb 2021 21:05:04 +0100</pubDate>
+      
+      <guid>https://codesharerepeat.github.io/post/aspdotnetcorelogging/correlationid/</guid>
+      <description>A correlation-ID is mostly the same like an transaction-id in the SQL World. I use it for logging and error analysis.
+ Whithout a correlation id you are totaly lost in your log!</description>
+    </item>
+    
+    <item>
+      <title>WebApi Logging Part 1: Api Setup with Nlog and JSON Config </title>
+      <link>https://codesharerepeat.github.io/post/aspdotnetcorelogging/setupwithnlog/</link>
+      <pubDate>Fri, 05 Feb 2021 15:47:52 +0100</pubDate>
+      
+      <guid>https://codesharerepeat.github.io/post/aspdotnetcorelogging/setupwithnlog/</guid>
+      <description>This series should show you, how to use NLog in an asp.net core web api.
+Setup the project The Basic setup of this project is descibed in my last blogpost. (there u see also, how to setup NLog with a JSON config)</description>
+    </item>
+    
     <item>
       <title>Switching from pc to mac</title>
       <link>https://codesharerepeat.github.io/post/pctomac/</link>
@@ -15,16 +35,6 @@
       <guid>https://codesharerepeat.github.io/post/pctomac/</guid>
       <description>I&amp;rsquo;m a developer in the Microsoft ecosystem but I prefer Apple hardware, and since Microsoft introduced .NET 5 it is easy to work on your project using a mac.
 This post shall describe you my experience regarding the switch from pc to mac, while the rest of the development team is working with a pc.</description>
-    </item>
-    
-    <item>
-      <title>Part 2 Logging: Correlation-ID with ASP.NET Core WebApi and NLog</title>
-      <link>https://codesharerepeat.github.io/post/aspdotnetcorelogging/correlationid/</link>
-      <pubDate>Sun, 10 Jan 2021 21:05:04 +0100</pubDate>
-      
-      <guid>https://codesharerepeat.github.io/post/aspdotnetcorelogging/correlationid/</guid>
-      <description>A correlation ID is mostly the same like an transaction-id in the SQL World. I use it for logging and error analysis.
- Whithout a correlation id you are totaly lost in your log!</description>
     </item>
     
   </channel>

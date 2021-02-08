@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" data-theme=""><head>
-    <title> Chris König | Part 2 Logging: Correlation-ID with ASP.NET Core WebApi and NLog </title>
+    <title> Chris König | WebApi Logging Part 2: Correlation-ID with ASP.NET Core WebApi and NLog </title>
 
     
     <meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-    <meta name="description" content="coder father citizen">
+    <meta name="description" content="Thoughts, ideas and other stuff about coding dotnet, azure and software architecture.">
     
     <link rel="stylesheet"
           href="https://codesharerepeat.github.io/css/style.min.9a6700e4461b50dccdddfc4f81dc65d77e7fca22c35665e398a0c36568db59c7.css"
@@ -52,8 +52,8 @@
     <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://codesharerepeat.github.io/images/site-feature-image.png"/>
 
-<meta name="twitter:title" content="Part 2 Logging: Correlation-ID with ASP.NET Core WebApi and NLog"/>
-<meta name="twitter:description" content="A correlation ID is mostly the same like an transaction-id in the SQL World. I use it for logging and error analysis.
+<meta name="twitter:title" content="WebApi Logging Part 2: Correlation-ID with ASP.NET Core WebApi and NLog"/>
+<meta name="twitter:description" content="A correlation-ID is mostly the same like an transaction-id in the SQL World. I use it for logging and error analysis.
  Whithout a correlation id you are totaly lost in your log!"/>
 
 </head>
@@ -61,9 +61,9 @@
     <div class="logo-title">
         <div class="title">
             <img src="https://codesharerepeat.github.io/images/profile.jpg" alt="profile picture">
-            <h3 title=""><a href="/">Call me Chris</a></h3>
+            <h3 title=""><a href="/">Code. Share. Repeat.</a></h3>
             <div class="description">
-                <p>coder father citizen</p>
+                <p>Thoughts, ideas and other stuff about coding dotnet, azure and software architecture.</p>
             </div>
         </div>
     </div>
@@ -114,18 +114,6 @@
                         
                    title="">Posts</a></li>
         
-            
-            <li><a 
-                   href="/about/"
-                        
-                   title="">About</a></li>
-        
-            
-            <li><a 
-                   href="/contact/"
-                        
-                   title="">Contact</a></li>
-        
         
         
             <li class="theme-switch-item">
@@ -143,26 +131,45 @@
         <div class="post-content">
             
             <div class="post-title">
-                <h3>Part 2 Logging: Correlation-ID with ASP.NET Core WebApi and NLog</h3>
+                <h3>WebApi Logging Part 2: Correlation-ID with ASP.NET Core WebApi and NLog</h3>
                 
                     <div class="info">
                         <em class="fas fa-calendar-day"></em>
-                        <span class="date"> Sun, Jan 10, 2021 
+                        <span class="date"> Sun, Feb 7, 2021 
                                            </span>
                         <em class="fas fa-stopwatch"></em>
-                        <span class="reading-time">2-minute read</span>
+                        <span class="reading-time">3-minute read</span>
                     </div>
                 
             </div>
 
-            <p>A correlation ID is mostly the same like an transaction-id in the SQL World. I use it for logging and error analysis.</p>
+            <p>A correlation-ID is mostly the same like an transaction-id in the SQL World. I use it for logging and error analysis.</p>
 <blockquote>
 <p><strong>Whithout a correlation id you are totaly lost in your log!</strong></p>
 </blockquote>
-<h2 id="create-the-correlation-id">Create the Correlation Id</h2>
-<p>There are many different aprroaches but I think the most elegant is to use a <strong>middleware</strong> and the <strong>Trace.CorrelationManager.ActivityId</strong>.</p>
+<p>If multiple users call your API simultaneously, you need to find a mechanism for identifying, which log-entry belongs to which user action.</p>
+<h2 id="implementing-a-correlation-id">Implementing a correlation-Id</h2>
+<p>There are many different approaches but I think the most elegant is to use a <strong>middleware</strong> and the <strong>Trace.CorrelationManager.ActivityId</strong>.</p>
 <p>Your middleware (find a microsoft example <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-5.0">here</a>) shoud look like this.</p>
-<div class="highlight"><pre class="chroma"><code class="language-cs" data-lang="cs"><span class="k">public</span> <span class="k">class</span> <span class="nc">CorrelationIdMiddleware</span>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cs" data-lang="cs"><span class="k">public</span> <span class="k">class</span> <span class="nc">CorrelationIdMiddleware</span>
 <span class="p">{</span>
     <span class="k">private</span> <span class="k">readonly</span> <span class="n">RequestDelegate</span>  <span class="n">_next</span><span class="p">;</span>
 
@@ -176,26 +183,63 @@
         <span class="k">await</span> <span class="n">_next</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div><p>Now you can play around, and find the most efficient way for your project to create and store the <strong>Correlation-ID</strong>.</p>
-<h2 id="example-1-simple-create">Example 1: Simple create</h2>
-<p>Create and assign the <strong>Correlation-ID</strong> to the Trace.CorrelationManager.ActivityId.</p>
-<div class="highlight"><pre class="chroma"><code class="language-cs" data-lang="cs">    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="n">InvokeAsync</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Now you can play around, and find the most efficient way for your project to create and store the <strong>Correlation-ID</strong>.</p>
+<h2 id="example-1-simple-create-of-a-correlation-id">Example 1: Simple create of a correlation-Id</h2>
+<p>Within the middleware (see above), you can create and assign the <strong>correlation-Id</strong> to the Trace.CorrelationManager.ActivityId.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="hl"><span class="lnt">12
+</span></span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cs" data-lang="cs">    <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="n">InvokeAsync</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="n">Trace</span><span class="p">.</span><span class="n">CorrelationManager</span><span class="p">.</span><span class="n">ActivityId</span> <span class="p">=</span> <span class="n">Guid</span><span class="p">.</span><span class="n">NewGuid</span><span class="p">();</span>
-        <span class="k">await</span> <span class="n">_next</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+<span class="hl">        <span class="n">Trace</span><span class="p">.</span><span class="n">CorrelationManager</span><span class="p">.</span><span class="n">ActivityId</span> <span class="p">=</span> <span class="n">Guid</span><span class="p">.</span><span class="n">NewGuid</span><span class="p">();</span>
+</span>        <span class="k">await</span> <span class="n">_next</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div><p>This approach has the advantage, that NLog now can grab the correlation id from the Trace.CorrelationManager.ActivityId.</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>This approach has the advantage, that NLog now can grab the correlation id from the Trace.CorrelationManager.ActivityId.</p>
 <p>To do so, you can add to the Nlog config in the app settings this:</p>
-<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="s2">&#34;layout&#34;</span><span class="err">:</span><span class="s2">&#34;${level}|Correlation ID: ${activityId}|${message} ${exception:format=tostring}&#34;</span>
-</code></pre></div><p>The term <strong>${activityId}</strong> (NLog calls it &ldquo;layout&rdquo;) leads to the outpout of the GUID from the TraceCorrelationMangerId.</p>
-<h2 id="example-2-get-correlation-id-from-request-header-or-create-it">Example 2: Get Correlation id from Request-Header or create it</h2>
-<p>If you want a consistent handling of correlation-IDs in front- end backend, or across different services, than you should consider to create the correlation-ID client-side and send it in the Http-Header.</p>
-<p>ToDo so, first create a method in your middleware to extract or create a correlation id from the Http-Header.</p>
-<div class="highlight"><pre class="chroma"><code class="language-cs" data-lang="cs">        <span class="k">private</span> <span class="k">static</span> <span class="n">Guid</span> <span class="n">GetOrCreateCorrelationId</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">)</span>
+<blockquote>
+<p>&ldquo;layout&rdquo; : &ldquo;${level}|<strong>Correlation ID: ${activityId}</strong>|${message} ${exception:format=tostring}&rdquo;</p>
+</blockquote>
+<p>The term <strong>${activityId}</strong> (NLog calls it &ldquo;layout&rdquo;) leads to the outpout of the GUID from the TraceCorrelationMangerId.</p>
+<h2 id="example-2-get-correlation-id-from-request-header-or-create-it">Example 2: Get correlation-Id from Request-Header or create it</h2>
+<p>If you want a consistent handling of correlation-Ids in front- end backend, or across different services, than you should consider to create the correlation-ID client-side and send it in the Http-Header.</p>
+<p>ToDo so, first create a method in your middleware to extract or create a correlation id from the Http-Header of you request.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="hl"><span class="lnt">39
+</span></span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cs" data-lang="cs">        <span class="k">private</span> <span class="k">static</span> <span class="n">Guid</span> <span class="n">GetOrCreateCorrelationId</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="kt">var</span> <span class="n">header</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Headers</span><span class="p">[</span><span class="n">CorrelationHeaderPropName</span><span class="p">];</span>
-            
+<span class="hl">            <span class="kt">var</span> <span class="n">header</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Headers</span><span class="p">[</span><span class="n">CorrelationHeaderPropName</span><span class="p">];</span>
+</span>            
             <span class="kt">var</span> <span class="n">correlationId</span> <span class="p">=</span> <span class="n">Guid</span><span class="p">.</span><span class="n">NewGuid</span><span class="p">();</span>
 
             <span class="k">if</span> <span class="p">(</span><span class="n">header</span><span class="p">.</span><span class="n">Count</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span>
@@ -209,28 +253,52 @@
             <span class="k">return</span> <span class="n">correlationId</span><span class="p">;</span>
            
         <span class="p">}</span>
-</code></pre></div><p>This method must be used in the middleare Invoke method.</p>
-<div class="highlight"><pre class="chroma"><code class="language-cs" data-lang="cs">        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="n">InvokeAsync</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This method must be used in the middleware <strong>Invoke</strong> method. I addition you see in line 16-21 ,that with every response the correlation-Id is added to the response header.
+I highly revomend this, so you can</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="hl"><span class="lnt">13
+</span></span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="hl"><span class="lnt">16
+</span></span><span class="hl"><span class="lnt">17
+</span></span><span class="hl"><span class="lnt">18
+</span></span><span class="hl"><span class="lnt">19
+</span></span><span class="hl"><span class="lnt">20
+</span></span><span class="hl"><span class="lnt">21
+</span></span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cs" data-lang="cs">        <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="n">InvokeAsync</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">)</span>
         <span class="p">{</span>
             <span class="c1">// get or create the correlation id
-</span><span class="c1"></span>            <span class="n">Trace</span><span class="p">.</span><span class="n">CorrelationManager</span><span class="p">.</span><span class="n">ActivityId</span> <span class="p">=</span> <span class="n">GetOrCreateCorrelationId</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
-
+</span><span class="hl"><span class="c1"></span>            <span class="n">Trace</span><span class="p">.</span><span class="n">CorrelationManager</span><span class="p">.</span><span class="n">ActivityId</span> <span class="p">=</span> <span class="n">GetOrCreateCorrelationId</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+</span>
             <span class="c1">// apply the correlation ID to the response header for client side handling
-</span><span class="c1"></span>            <span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">OnStarting</span><span class="p">(()</span> <span class="p">=&gt;</span>
-            <span class="p">{</span>
-                <span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">CorrelationHeaderPropName</span><span class="p">,</span> <span class="k">new</span><span class="p">[]</span> <span class="p">{</span> <span class="n">Trace</span><span class="p">.</span><span class="n">CorrelationManager</span><span class="p">.</span><span class="n">ActivityId</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span> <span class="p">});</span>
-                                               
-                <span class="k">return</span> <span class="n">Task</span><span class="p">.</span><span class="n">CompletedTask</span><span class="p">;</span>
-            <span class="p">});</span>
-
+</span><span class="hl"><span class="c1"></span>            <span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">OnStarting</span><span class="p">(()</span> <span class="p">=&gt;</span>
+</span><span class="hl">            <span class="p">{</span>
+</span><span class="hl">                <span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">CorrelationHeaderPropName</span><span class="p">,</span> <span class="k">new</span><span class="p">[]</span> <span class="p">{</span> <span class="n">Trace</span><span class="p">.</span><span class="n">CorrelationManager</span><span class="p">.</span><span class="n">ActivityId</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span> <span class="p">});</span>
+</span><span class="hl">                                               
+</span><span class="hl">                <span class="k">return</span> <span class="n">Task</span><span class="p">.</span><span class="n">CompletedTask</span><span class="p">;</span>
+</span><span class="hl">            <span class="p">});</span>
+</span>
             <span class="k">await</span> <span class="n">_next</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
         <span class="p">}</span>
-</code></pre></div></div>
+</code></pre></td></tr></table>
+</div>
+</div></div>
         <div class="post-footer">
             <div class="info">
-                <span class="separator"><a class="category" href="/categories/coding/">coding</a></span>
+                <span class="separator"><a class="category" href="/categories/logging/">logging</a><a class="category" href="/categories/coding/">coding</a></span>
 
-                <span class="separator"><a class="tag" href="/tags/dotnet-core/">dotnet core</a><a class="tag" href="/tags/web-api/">web api</a></span>
+                <span class="separator"><a class="tag" href="/tags/dotnetcore/">dotnetcore</a><a class="tag" href="/tags/apnetcore-web-api/">apnetcore web api</a><a class="tag" href="/tags/nlog/">NLog</a></span>
 
             </div>
         </div>

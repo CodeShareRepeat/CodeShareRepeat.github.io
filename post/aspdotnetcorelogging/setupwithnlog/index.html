@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" data-theme=""><head>
+    <title> Chris König | WebApi Logging Part 1: Api Setup with Nlog and JSON Config  </title>
+
+    
+    <meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="description" content="Thoughts, ideas and other stuff about coding dotnet, azure and software architecture.">
+    
+    <link rel="stylesheet"
+          href="https://codesharerepeat.github.io/css/style.min.9a6700e4461b50dccdddfc4f81dc65d77e7fca22c35665e398a0c36568db59c7.css"
+          integrity="sha256-mmcA5EYbUNzN3fxPgdxl135/yiLDVmXjmKDDZWjbWcc="
+          crossorigin="anonymous"
+          type="text/css">
+    
+    <link rel="stylesheet"
+        href="https://codesharerepeat.github.io/css/markupHighlight.min.9755453ffb7bc4cd220f86ebb5922107b49f193cc62fc17e9785d27b33a8bf5b.css"
+        integrity="sha256-l1VFP/t7xM0iD4brtZIhB7SfGTzGL8F&#43;l4XSezOov1s="
+        crossorigin="anonymous"
+        type="text/css">
+    
+    <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" 
+    integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" 
+    crossorigin="anonymous" />
+
+    
+    <link rel="shortcut icon" href="https://codesharerepeat.github.io/favicons/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://codesharerepeat.github.io/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://codesharerepeat.github.io/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://codesharerepeat.github.io/favicons/favicon-16x16.png">
+
+    <link rel="canonical" href="https://codesharerepeat.github.io/post/aspdotnetcorelogging/setupwithnlog/">
+
+    
+    
+    
+    
+    <script type="text/javascript"
+            src="https://codesharerepeat.github.io/js/anatole-header.min.d8599ee07b7d3f11bafbac30657ccc591e8d7fd36a9f580cd4c09e24e0e4a971.js"
+            integrity="sha256-2Fme4Ht9PxG6&#43;6wwZXzMWR6Nf9Nqn1gM1MCeJODkqXE="
+            crossorigin="anonymous"></script>
+
+
+    
+        
+        
+        <script type="text/javascript"
+                src="https://codesharerepeat.github.io/js/anatole-theme-switcher.min.e289e9ebb2a4e7a7f895859c8a2b0da2de1ec73f22cea58d8475aa0597023837.js"
+                integrity="sha256-4onp67Kk56f4lYWciisNot4exz8izqWNhHWqBZcCODc="
+                crossorigin="anonymous"></script>
+    
+    <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://codesharerepeat.github.io/images/site-feature-image.png"/>
+
+<meta name="twitter:title" content="WebApi Logging Part 1: Api Setup with Nlog and JSON Config "/>
+<meta name="twitter:description" content="This series should show you, how to use NLog in an asp.net core web api.
+Setup the project The Basic setup of this project is descibed in my last blogpost. (there u see also, how to setup NLog with a JSON config)"/>
+
+</head>
+<body><div class="sidebar animated fadeInDown ">
+    <div class="logo-title">
+        <div class="title">
+            <img src="https://codesharerepeat.github.io/images/profile.jpg" alt="profile picture">
+            <h3 title=""><a href="/">Code. Share. Repeat.</a></h3>
+            <div class="description">
+                <p>Thoughts, ideas and other stuff about coding dotnet, azure and software architecture.</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links">
+        
+            <li>
+                <a href="https://www.linkedin.com/in/christoph-k%c3%b6nig" rel="me" aria-label="Linkedin">
+                    <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="https://github.com/codesharerepeat" rel="me" aria-label="GitHub">
+                    <i class="fab fa-github fa-2x" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="mailto:mail@alexbilz.com" rel="me" aria-label="e-mail">
+                    <i class="fas fa-envelope fa-2x" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+    </ul>
+    <div class="footer">
+        <div class="by_farbox">&copy; Chris König  2020-2021 </div>
+    </div>
+</div>
+<div class="main">
+    <div class="page-top  animated fadeInDown ">
+    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+    </a>
+    <ul class="nav" id="navMenu">
+        
+        
+            
+            <li><a 
+                   href="/"
+                        
+                   title="">Home</a></li>
+        
+            
+            <li><a 
+                   href="/post/"
+                        
+                   title="">Posts</a></li>
+        
+        
+        
+            <li class="theme-switch-item">
+                <a class="theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+    <div class="post  animated fadeInDown ">
+        <div class="post-content">
+            
+            <div class="post-title">
+                <h3>WebApi Logging Part 1: Api Setup with Nlog and JSON Config </h3>
+                
+                    <div class="info">
+                        <em class="fas fa-calendar-day"></em>
+                        <span class="date"> Fri, Feb 5, 2021 
+                                           </span>
+                        <em class="fas fa-stopwatch"></em>
+                        <span class="reading-time">2-minute read</span>
+                    </div>
+                
+            </div>
+
+            <p>This series should show you, how to use NLog in an asp.net core web api.</p>
+<h2 id="setup-the-project">Setup the project</h2>
+<p>The Basic setup of this project is descibed in my last blogpost. (there u see also, how to setup NLog with a JSON config)</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">    <span class="nx">dotnet</span> <span class="nx">new</span> <span class="nx">webapi</span>
+    <span class="nx">dotnet</span> <span class="nx">add</span> <span class="kn">package</span> <span class="nx">NLog</span><span class="p">.</span><span class="nx">Web</span><span class="p">.</span><span class="nx">AspNetCore</span>
+    <span class="nx">dotnet</span> <span class="nx">add</span> <span class="kn">package</span> <span class="nx">NLog</span><span class="p">.</span><span class="nx">Extensions</span><span class="p">.</span><span class="nx">Logging</span>
+    <span class="nx">dotnet</span> <span class="nx">new</span> <span class="nx">gitignore</span>
+    <span class="nx">touch</span> <span class="nx">readme</span><span class="p">.</span><span class="nx">md</span>
+    <span class="nx">git</span> <span class="nx">init</span>
+    <span class="nx">git</span> <span class="nx">add</span> <span class="p">.</span>
+    <span class="nx">git</span> <span class="nx">commit</span> <span class="o">--</span><span class="nx">all</span> <span class="o">--</span><span class="nx">message</span><span class="p">=</span><span class="s">&#34;initial create&#34;</span>
+</code></pre></div><p>done.</p>
+<blockquote>
+<p><strong>Now setup NLog like described <a href="https://github.com/NLog/NLog.Extensions.Logging/wiki/NLog-configuration-with-appsettings.json">here</a> and <a href="https://github.com/NLog/NLog/wiki/Getting-started-with-ASP.NET-Core-5">here</a>.</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>The complete setup can be found in my <a href="https://github.com/CodeShareRepeat/aspdotnetcorelogging">gitrepo</a>.</strong></p>
+</blockquote>
+<h2 id="nlog-with-json-configuration">NLog with Json configuration</h2>
+<p>Nlog by default uses xml configurations - but I like Json, mostly because for me it has a better readability.</p>
+<p>Create a new section &ldquo;NLog&rdquo; in your appsettings.json file:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="hl"><span class="lnt"> 9
+</span></span><span class="hl"><span class="lnt">10
+</span></span><span class="hl"><span class="lnt">11
+</span></span><span class="hl"><span class="lnt">12
+</span></span><span class="hl"><span class="lnt">13
+</span></span><span class="hl"><span class="lnt">14
+</span></span><span class="hl"><span class="lnt">15
+</span></span><span class="hl"><span class="lnt">16
+</span></span><span class="hl"><span class="lnt">17
+</span></span><span class="hl"><span class="lnt">18
+</span></span><span class="hl"><span class="lnt">19
+</span></span><span class="hl"><span class="lnt">20
+</span></span><span class="hl"><span class="lnt">21
+</span></span><span class="hl"><span class="lnt">22
+</span></span><span class="hl"><span class="lnt">23
+</span></span><span class="hl"><span class="lnt">24
+</span></span><span class="hl"><span class="lnt">25
+</span></span><span class="hl"><span class="lnt">26
+</span></span><span class="hl"><span class="lnt">27
+</span></span><span class="hl"><span class="lnt">28
+</span></span><span class="hl"><span class="lnt">29
+</span></span><span class="hl"><span class="lnt">30
+</span></span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Json" data-lang="Json"><span class="p">{</span>
+  <span class="nt">&#34;Logging&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;LogLevel&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;Default&#34;</span><span class="p">:</span> <span class="s2">&#34;Information&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;Microsoft&#34;</span><span class="p">:</span> <span class="s2">&#34;Warning&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;Microsoft.Hosting.Lifetime&#34;</span><span class="p">:</span> <span class="s2">&#34;Information&#34;</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+<span class="hl">  <span class="nt">&#34;NLog&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class="hl">    <span class="nt">&#34;throwConfigExceptions&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class="hl">    <span class="nt">&#34;targets&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class="hl">        <span class="nt">&#34;logconsole&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class="hl">          <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;console&#34;</span><span class="p">,</span>
+</span><span class="hl">          <span class="nt">&#34;layout&#34;</span><span class="p">:</span><span class="s2">&#34;${level}|Correlation ID: ${activityId}|${message} ${exception:format=tostring}&#34;</span>
+</span><span class="hl">      <span class="p">}</span>
+</span><span class="hl">    <span class="p">},</span>
+</span><span class="hl">    <span class="nt">&#34;rules&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class="hl">      <span class="p">{</span>
+</span><span class="hl">        <span class="nt">&#34;maxlevel&#34;</span><span class="p">:</span> <span class="s2">&#34;Error&#34;</span><span class="p">,</span>
+</span><span class="hl">        <span class="nt">&#34;logger&#34;</span><span class="p">:</span> <span class="s2">&#34;Microsoft.*&#34;</span><span class="p">,</span>
+</span><span class="hl">        <span class="nt">&#34;final&#34;</span><span class="p">:</span> <span class="kc">true</span>
+</span><span class="hl">      <span class="p">},</span>
+</span><span class="hl">      
+</span><span class="hl">      <span class="p">{</span>
+</span><span class="hl">        <span class="nt">&#34;logger&#34;</span><span class="p">:</span> <span class="s2">&#34;*&#34;</span><span class="p">,</span>
+</span><span class="hl">        <span class="nt">&#34;minLevel&#34;</span><span class="p">:</span> <span class="s2">&#34;Trace&#34;</span><span class="p">,</span>
+</span><span class="hl">        <span class="nt">&#34;writeTo&#34;</span><span class="p">:</span> <span class="s2">&#34;logconsole&#34;</span>
+</span><span class="hl">      <span class="p">}</span>
+</span><span class="hl">    <span class="p">]</span>
+</span><span class="hl">  <span class="p">},</span>
+</span>  <span class="nt">&#34;AllowedHosts&#34;</span><span class="p">:</span> <span class="s2">&#34;*&#34;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This config will create you a console logger wich outputs the level, message and the correlation-Id (see <a href="https://codesharerepeat.github.io/post/aspdotnetcorelogging/correlationid/" title="Part 2">PART 2</a>).</p>
+<p>Next you have to use this NLog Json config in your <strong>programm.cs</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="c1">// get the configuration file
+</span><span class="c1"></span><span class="kt">var</span> <span class="n">config</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ConfigurationBuilder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">SetBasePath</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">Directory</span><span class="p">.</span><span class="n">GetCurrentDirectory</span><span class="p">())</span>
+    <span class="p">.</span><span class="n">AddJsonFile</span><span class="p">(</span><span class="s">&#34;appsettings.json&#34;</span><span class="p">,</span> <span class="n">optional</span><span class="p">:</span> <span class="k">true</span><span class="p">,</span> <span class="n">reloadOnChange</span><span class="p">:</span> <span class="k">true</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">Build</span><span class="p">();</span>
+
+ <span class="c1">// assign the config to the loggmanager 
+</span><span class="c1"></span><span class="n">LogManager</span><span class="p">.</span><span class="n">Configuration</span> <span class="p">=</span> <span class="k">new</span> <span class="n">NLogLoggingConfiguration</span><span class="p">(</span><span class="n">config</span><span class="p">.</span><span class="n">GetSection</span><span class="p">(</span><span class="s">&#34;NLog&#34;</span><span class="p">));</span>
+
+<span class="c1">// create the Nlogger
+</span><span class="c1"></span><span class="kt">var</span> <span class="n">logger</span> <span class="p">=</span> <span class="n">NLogBuilder</span><span class="p">.</span><span class="n">ConfigureNLog</span><span class="p">(</span><span class="n">LogManager</span><span class="p">.</span><span class="n">Configuration</span><span class="p">).</span><span class="n">GetCurrentClassLogger</span><span class="p">();</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>In the <strong>CreateHostBuilder</strong> you&rsquo;ll need to add this to make it work.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="hl"><span class="lnt">36
+</span></span><span class="hl"><span class="lnt">37
+</span></span><span class="hl"><span class="lnt">38
+</span></span><span class="hl"><span class="lnt">39
+</span></span><span class="hl"><span class="lnt">40
+</span></span><span class="hl"><span class="lnt">41
+</span></span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-csharp" data-lang="csharp"><span class="k">public</span> <span class="k">static</span> <span class="n">IHostBuilder</span> <span class="n">CreateHostBuilder</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">=&gt;</span>
+        <span class="n">Host</span><span class="p">.</span><span class="n">CreateDefaultBuilder</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+            <span class="p">.</span><span class="n">ConfigureWebHostDefaults</span><span class="p">(</span><span class="n">webBuilder</span> <span class="p">=&gt;</span>
+            <span class="p">{</span>
+                <span class="n">webBuilder</span><span class="p">.</span><span class="n">UseStartup</span><span class="p">&lt;</span><span class="n">Startup</span><span class="p">&gt;();</span>
+            <span class="p">})</span>
+<span class="hl">            <span class="p">.</span><span class="n">ConfigureLogging</span><span class="p">(</span><span class="n">log</span> <span class="p">=&gt;</span> 
+</span><span class="hl">            <span class="p">{</span>
+</span><span class="hl">                <span class="n">log</span><span class="p">.</span><span class="n">ClearProviders</span><span class="p">();</span>
+</span><span class="hl">            <span class="p">}</span>
+</span><span class="hl">            <span class="p">)</span>                
+</span><span class="hl">            <span class="p">.</span><span class="n">UseNLog</span><span class="p">();</span>
+</span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>That&rsquo;s it - now you can use the logger everywhere in the project.</p>
+<h4 id="next-part-2---implementing-a-correlation-idhahahugoshortcode-s1-hbhb-part-2">Next: <a href="https://codesharerepeat.github.io/post/aspdotnetcorelogging/correlationid/" title="Part 2">Part 2 - Implementing a correlation-Id</a>.</h4>
+</div>
+        <div class="post-footer">
+            <div class="info">
+                <span class="separator"><a class="category" href="/categories/logging/">logging</a><a class="category" href="/categories/coding/">coding</a></span>
+
+                <span class="separator"><a class="tag" href="/tags/dotnetcore/">dotnetcore</a><a class="tag" href="/tags/apnetcore-web-api/">apnetcore web api</a><a class="tag" href="/tags/nlog/">NLog</a></span>
+
+            </div>
+        </div>
+
+        
+    </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"
+        src="https://codesharerepeat.github.io/js/jquery.min.86b1e8f819ee2d9099a783e50b49dff24282545fc40773861f9126b921532e4c.js"
+        integrity="sha256-hrHo&#43;BnuLZCZp4PlC0nf8kKCVF/EB3OGH5EmuSFTLkw="
+        crossorigin="anonymous"></script>
+
+
+
+
+<script type="text/javascript"
+        src="https://codesharerepeat.github.io/js/bundle.min.0f9c74cb78f13d1f15f33daff4037c70354f98acfbb97a6f61708966675c3cae.js"
+        integrity="sha256-D5x0y3jxPR8V8z2v9AN8cDVPmKz7uXpvYXCJZmdcPK4="
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript"
+        src="https://codesharerepeat.github.io/js/medium-zoom.min.92f21c856129f84aeb719459b3e6ac621a3032fd7b180a18c04e1d12083f8aba.js"
+        integrity="sha256-kvIchWEp&#43;ErrcZRZs&#43;asYhowMv17GAoYwE4dEgg/iro="
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

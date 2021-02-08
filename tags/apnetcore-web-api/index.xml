@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>coding on Website of Chris König</title>
-    <link>https://codesharerepeat.github.io/categories/coding/</link>
-    <description>Recent content in coding on Website of Chris König</description>
+    <title>apnetcore web api on Website of Chris König</title>
+    <link>https://codesharerepeat.github.io/tags/apnetcore-web-api/</link>
+    <description>Recent content in apnetcore web api on Website of Chris König</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 07 Feb 2021 21:05:04 +0100</lastBuildDate><atom:link href="https://codesharerepeat.github.io/categories/coding/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 07 Feb 2021 21:05:04 +0100</lastBuildDate><atom:link href="https://codesharerepeat.github.io/tags/apnetcore-web-api/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>WebApi Logging Part 2: Correlation-ID with ASP.NET Core WebApi and NLog</title>
       <link>https://codesharerepeat.github.io/post/aspdotnetcorelogging/correlationid/</link>

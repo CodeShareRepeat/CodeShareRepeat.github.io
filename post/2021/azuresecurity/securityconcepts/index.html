@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en" data-theme=""><head>
+    <title> Chris König | Microsoft Identity Plattform - Create WEB API, SPA and Console Client </title>
+
+    
+    <meta charset="utf-8"><meta name="generator" content="Hugo 0.80.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="description" content="Thoughts, ideas and other stuff about coding dotnet, azure and software architecture.">
+    
+    <link rel="stylesheet"
+          href="https://codesharerepeat.github.io/css/style.min.9a6700e4461b50dccdddfc4f81dc65d77e7fca22c35665e398a0c36568db59c7.css"
+          integrity="sha256-mmcA5EYbUNzN3fxPgdxl135/yiLDVmXjmKDDZWjbWcc="
+          crossorigin="anonymous"
+          type="text/css">
+    
+    <link rel="stylesheet"
+        href="https://codesharerepeat.github.io/css/markupHighlight.min.cc84ed683057cc175ddfa738ea6ba2d5c882b95cb64f50bf9be918cb3791887b.css"
+        integrity="sha256-zITtaDBXzBdd36c46mui1ciCuVy2T1C/m&#43;kYyzeRiHs="
+        crossorigin="anonymous"
+        type="text/css">
+    
+    <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" 
+    integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" 
+    crossorigin="anonymous" />
+
+    
+    <link rel="shortcut icon" href="https://codesharerepeat.github.io/favicons/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://codesharerepeat.github.io/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://codesharerepeat.github.io/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://codesharerepeat.github.io/favicons/favicon-16x16.png">
+
+    <link rel="canonical" href="https://codesharerepeat.github.io/post/2021/azuresecurity/securityconcepts/">
+
+    
+    
+    
+    
+    <script type="text/javascript"
+            src="https://codesharerepeat.github.io/js/anatole-header.min.d8599ee07b7d3f11bafbac30657ccc591e8d7fd36a9f580cd4c09e24e0e4a971.js"
+            integrity="sha256-2Fme4Ht9PxG6&#43;6wwZXzMWR6Nf9Nqn1gM1MCeJODkqXE="
+            crossorigin="anonymous"></script>
+
+
+    
+        
+        
+        <script type="text/javascript"
+                src="https://codesharerepeat.github.io/js/anatole-theme-switcher.min.e289e9ebb2a4e7a7f895859c8a2b0da2de1ec73f22cea58d8475aa0597023837.js"
+                integrity="sha256-4onp67Kk56f4lYWciisNot4exz8izqWNhHWqBZcCODc="
+                crossorigin="anonymous"></script>
+    
+    <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://codesharerepeat.github.io/images/site-feature-image.png"/>
+
+<meta name="twitter:title" content="Microsoft Identity Plattform - Create WEB API, SPA and Console Client"/>
+<meta name="twitter:description" content="This series should describe you the concept and use of the Microsoft Identity Plattform.
+I will use aspnetcore 5 webapi and implement authentication and authorization from scratch.
+The most important know how ressource about the topic is this page."/>
+
+</head>
+<body><div class="sidebar animated fadeInDown ">
+    <div class="logo-title">
+        <div class="title">
+            <img src="https://codesharerepeat.github.io/images/profile.jpg" alt="profile picture">
+            <h3 title=""><a href="/">Code. Share. Repeat.</a></h3>
+            <div class="description">
+                <p>Thoughts, ideas and other stuff about coding dotnet, azure and software architecture.</p>
+            </div>
+        </div>
+    </div>
+    <ul class="social-links">
+        
+            <li>
+                <a href="https://www.linkedin.com/in/christoph-k%c3%b6nig" rel="me" aria-label="Linkedin">
+                    <i class="fab fa-linkedin fa-2x" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="https://github.com/codesharerepeat" rel="me" aria-label="GitHub">
+                    <i class="fab fa-github fa-2x" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            <li>
+                <a href="mailto:mail@alexbilz.com" rel="me" aria-label="e-mail">
+                    <i class="fas fa-envelope fa-2x" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+    </ul>
+    <div class="footer">
+        <div class="by_farbox">&copy; Chris König  2020-2021 </div>
+    </div>
+</div>
+<div class="main">
+    <div class="page-top  animated fadeInDown ">
+    <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+    </a>
+    <ul class="nav" id="navMenu">
+        
+        
+            
+            <li><a 
+                   href="/"
+                        
+                   title="">Home</a></li>
+        
+            
+            <li><a 
+                   href="/post/"
+                        
+                   title="">Posts</a></li>
+        
+        
+        
+            <li class="theme-switch-item">
+                <a class="theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+    <div class="autopagerize_page_element">
+        <div class="content">
+    <div class="post  animated fadeInDown ">
+        <div class="post-content">
+            
+            <div class="post-title">
+                <h3>Microsoft Identity Plattform - Create WEB API, SPA and Console Client</h3>
+                
+                    <div class="info">
+                        <em class="fas fa-calendar-day"></em>
+                        <span class="date"> Sat, Feb 20, 2021 
+                                           </span>
+                        <em class="fas fa-stopwatch"></em>
+                        <span class="reading-time">4-minute read</span>
+                    </div>
+                
+            </div>
+
+            <p>This series should describe you the concept and use of the <strong>Microsoft Identity Plattform</strong>.</p>
+<p>I will use <strong><code>aspnetcore 5 webapi</code></strong> and implement authentication and authorization from scratch.</p>
+<p><strong>The most important know how ressource about the topic is <a href="https://docs.microsoft.com/en-us/azure/active-directory/develop/">this page</a></strong>.</p>
+<p><strong>What do we build?</strong></p>
+<ol>
+<li>
+<p>asp dotnetcore 5 webapi (REST) including authentication and autorization</p>
+</li>
+<li>
+<p>console client accessing the web-api (REST) with client secrets</p>
+</li>
+<li>
+<p>react SPA accassing the web-api (REST) using msal-browser and msal-react</p>
+</li>
+</ol>
+<p><strong>What is Microsoft Identity Plattform?</strong></p>
+<p>To make a long story short, it is mostly Azure Actice Directory and some usefull libs added for the developer.</p>
+<h3 id="step-1-create-the-app-registration-for-the-web-api-rest">Step 1: Create the App Registration for the web-api (REST)</h3>
+<p>The first thing you have to do, is to create an App Registration. This will create a &ldquo;container&rdquo; which connects your app with the Microsoft Identity Plattform.</p>
+<p>Only with the app registration you are able to implement client certificates, users and rolles etc.</p>
+<p>Create the app registration:</p>
+<figure>
+    <img src="/images/2021/azuresecurity/ApiAppRegistrationStart.jpg" width="50%"/> 
+</figure>
+
+<p>After that you have to configure it.</p>
+<p><strong>Use localhost redirect Url, because we will run our service first locally</strong></p>
+<figure>
+    <img src="/images/2021/azuresecurity/ApiRegister.png" width="50%"/> 
+</figure>
+
+<p>Now you must have a look at these GUIDs. We&rsquo;ll need them later!</p>
+<figure>
+    <img src="/images/2021/azuresecurity/ApiRegistrationGuids.png" height="350"/> 
+</figure>
+
+<p>This is all - now we can create the Rest Api on our machine.</p>
+<h3 id="step-2-create-the-web-api-rest">Step 2: Create the web-api (REST)</h3>
+<p><a href="https://github.com/CodeShareRepeat/AzureAppSecurity">All code can be found here</a></p>
+<p>To create the api you&rsquo;ll have to run some commands.</p>
+<ol>
+<li>Create a folder for your solution</li>
+<li>dotnet new webapi</li>
+<li>dotnet add package Microsoft.Identity.Web</li>
+</ol>
+<p>That&rsquo;s it.</p>
+<p>First got to the <strong>appsettings.json</strong> and add this section with the guids from the AppRegistration.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="hl"><span class="lnt">10
+</span></span><span class="hl"><span class="lnt">11
+</span></span><span class="hl"><span class="lnt">12
+</span></span><span class="hl"><span class="lnt">13
+</span></span><span class="hl"><span class="lnt">14
+</span></span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;Logging&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;LogLevel&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;Default&#34;</span><span class="p">:</span> <span class="s2">&#34;Information&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;Microsoft&#34;</span><span class="p">:</span> <span class="s2">&#34;Warning&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;Microsoft.Hosting.Lifetime&#34;</span><span class="p">:</span> <span class="s2">&#34;Information&#34;</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;AllowedHosts&#34;</span><span class="p">:</span> <span class="s2">&#34;*&#34;</span><span class="p">,</span>
+<span class="hl">  <span class="nt">&#34;AzureAd&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class="hl">    <span class="nt">&#34;Instance&#34;</span><span class="p">:</span> <span class="s2">&#34;https://login.microsoftonline.com/&#34;</span><span class="p">,</span>
+</span><span class="hl">    <span class="nt">&#34;Domain&#34;</span><span class="p">:</span> <span class="s2">&#34;yourdomainname-aad.onmicrosoft.com&#34;</span><span class="p">,</span>
+</span><span class="hl">    <span class="nt">&#34;ClientId&#34;</span><span class="p">:</span> <span class="s2">&#34;0ad8d67a-XXXX-XXXX-XXXX-XXXXXXXXX&#34;</span><span class="p">,</span>
+</span><span class="hl">    <span class="nt">&#34;TenantId&#34;</span><span class="p">:</span> <span class="s2">&#34;e57d59e1-XXXX-XXXX-XXXX-XXXXXXXXX&#34;</span>
+</span>  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Update <strong>startup.cs</strong> method <strong>configureservices</strong>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="hl"><span class="lnt"> 3
+</span></span><span class="hl"><span class="lnt"> 4
+</span></span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cs" data-lang="cs"><span class="k">public</span> <span class="k">void</span> <span class="n">ConfigureServices</span><span class="p">(</span><span class="n">IServiceCollection</span> <span class="n">services</span><span class="p">)</span>
+        <span class="p">{</span>
+<span class="hl">            <span class="n">services</span><span class="p">.</span><span class="n">AddAuthentication</span><span class="p">(</span><span class="n">JwtBearerDefaults</span><span class="p">.</span><span class="n">AuthenticationScheme</span><span class="p">)</span>
+</span><span class="hl">               <span class="p">.</span><span class="n">AddMicrosoftIdentityWebApi</span><span class="p">(</span><span class="n">Configuration</span><span class="p">,</span> <span class="s">&#34;AzureAd&#34;</span><span class="p">);</span>
+</span>
+            <span class="n">services</span><span class="p">.</span><span class="n">AddControllers</span><span class="p">();</span>
+            <span class="n">services</span><span class="p">.</span><span class="n">AddSwaggerGen</span><span class="p">(</span><span class="n">c</span> <span class="p">=&gt;</span>
+            <span class="p">{</span>
+                <span class="n">c</span><span class="p">.</span><span class="n">SwaggerDoc</span><span class="p">(</span><span class="s">&#34;v1&#34;</span><span class="p">,</span> <span class="k">new</span> <span class="n">OpenApiInfo</span> <span class="p">{</span> <span class="n">Title</span> <span class="p">=</span> <span class="s">&#34;restapi&#34;</span><span class="p">,</span> <span class="n">Version</span> <span class="p">=</span> <span class="s">&#34;v1&#34;</span> <span class="p">});</span>
+            <span class="p">});</span>
+        <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Update <strong>startup.cs</strong> method <strong>configure</strong>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="hl"><span class="lnt">14
+</span></span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cs" data-lang="cs"><span class="k">public</span> <span class="k">void</span> <span class="n">Configure</span><span class="p">(</span><span class="n">IApplicationBuilder</span> <span class="n">app</span><span class="p">,</span> <span class="n">IWebHostEnvironment</span> <span class="n">env</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">env</span><span class="p">.</span><span class="n">IsDevelopment</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="n">app</span><span class="p">.</span><span class="n">UseDeveloperExceptionPage</span><span class="p">();</span>
+        <span class="n">app</span><span class="p">.</span><span class="n">UseSwagger</span><span class="p">();</span>
+        <span class="n">app</span><span class="p">.</span><span class="n">UseSwaggerUI</span><span class="p">(</span><span class="n">c</span> <span class="p">=&gt;</span> <span class="n">c</span><span class="p">.</span><span class="n">SwaggerEndpoint</span><span class="p">(</span><span class="s">&#34;/swagger/v1/swagger.json&#34;</span><span class="p">,</span> <span class="s">&#34;restapi v1&#34;</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="n">app</span><span class="p">.</span><span class="n">UseHttpsRedirection</span><span class="p">();</span>
+
+    <span class="n">app</span><span class="p">.</span><span class="n">UseRouting</span><span class="p">();</span>
+
+<span class="hl">    <span class="n">app</span><span class="p">.</span><span class="n">UseAuthentication</span><span class="p">();</span>
+</span>
+    <span class="n">app</span><span class="p">.</span><span class="n">UseAuthorization</span><span class="p">();</span>
+
+    <span class="n">app</span><span class="p">.</span><span class="n">UseEndpoints</span><span class="p">(</span><span class="n">endpoints</span> <span class="p">=&gt;</span>
+    <span class="p">{</span>
+        <span class="n">endpoints</span><span class="p">.</span><span class="n">MapControllers</span><span class="p">();</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Now update the controller and add the [Authorize] tag to the controller.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="hl"><span class="lnt"> 1
+</span></span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cs" data-lang="cs"><span class="hl"><span class="na">[Authorize]</span>
+</span><span class="na">[HttpGet]</span>
+<span class="k">public</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">WeatherForecast</span><span class="p">&gt;</span> <span class="n">Get</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">rng</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Random</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">Enumerable</span><span class="p">.</span><span class="n">Range</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">5</span><span class="p">).</span><span class="n">Select</span><span class="p">(</span><span class="n">index</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="n">WeatherForecast</span>
+    <span class="p">{</span>
+        <span class="n">Date</span> <span class="p">=</span> <span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">.</span><span class="n">AddDays</span><span class="p">(</span><span class="n">index</span><span class="p">),</span>
+        <span class="n">TemperatureC</span> <span class="p">=</span> <span class="n">rng</span><span class="p">.</span><span class="n">Next</span><span class="p">(-</span><span class="m">20</span><span class="p">,</span> <span class="m">55</span><span class="p">),</span>
+        <span class="n">Summary</span> <span class="p">=</span> <span class="n">Summaries</span><span class="p">[</span><span class="n">rng</span><span class="p">.</span><span class="n">Next</span><span class="p">(</span><span class="n">Summaries</span><span class="p">.</span><span class="n">Length</span><span class="p">)]</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="n">ToArray</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="step3-create-a-console-app-deamon-to-access-the-secure-web-api">Step3: Create a console app (deamon) to access the secure web-api</h3>
+<p><a href="https://github.com/CodeShareRepeat/AzureAppSecurity">The code for the console app can be found here.</a>.</p>
+<p>You&rsquo;ll have to create a app registration in azure for your console app.</p>
+<p>Register the app like the app before and get the guids from the registration.</p>
+<p><figure>
+    <img src="/images/2021/azuresecurity/CreateConsoleApp.jpg" width="50%"/> 
+</figure>
+.</p>
+<p>Then add a secret for the console app. You&rsquo;ll need this instead of a username and password.</p>
+<p><figure>
+    <img src="/images/2021/azuresecurity/ConsoleSecret.png" width="50%"/> 
+</figure>
+.</p>
+<p>Now you have to update the <strong>api registration</strong>, by adding an app role.</p>
+<p><figure>
+    <img src="/images/2021/azuresecurity/CreateAppRole.png" width="50%"/> 
+</figure>
+.</p>
+<p>Than you can assign this role in the <strong>console app registration</strong>.</p>
+<p><figure>
+    <img src="/images/2021/azuresecurity/ConsoleAssignAppRole.png" width="50%"/> 
+</figure>
+.</p>
+<p>Dont&rsquo;t forget to consent the role assignment.</p>
+<p><figure>
+    <img src="/images/2021/azuresecurity/Grantrole.png" width="50%"/> 
+</figure>
+.</p>
+<p>Now you can check the source code and configure the console app, like this</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="hl"><span class="lnt">2
+</span></span><span class="hl"><span class="lnt">3
+</span></span><span class="hl"><span class="lnt">4
+</span></span><span class="hl"><span class="lnt">5
+</span></span><span class="hl"><span class="lnt">6
+</span></span><span class="hl"><span class="lnt">7
+</span></span><span class="hl"><span class="lnt">8
+</span></span><span class="hl"><span class="lnt">9
+</span></span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-cs" data-lang="cs"><span class="p">{</span>
+<span class="hl">  <span class="s">&#34;Instance&#34;</span><span class="p">:</span> <span class="s">&#34;https://login.microsoftonline.com/{0}&#34;</span><span class="p">,</span>
+</span><span class="hl">  <span class="s">&#34;Tenant&#34;</span><span class="p">:</span> <span class="s">&#34;e57d59e1-1111-1111-1111-11111111111&#34;</span><span class="p">,</span> <span class="c1">// AAD Tennat id
+</span></span><span class="hl"><span class="c1"></span>  <span class="s">&#34;ClientId&#34;</span><span class="p">:</span> <span class="s">&#34;777731e5-5438-4000-acf4-211ae72d9467&#34;</span><span class="p">,</span> <span class="c1">// API ID of the console app registration
+</span></span><span class="hl"><span class="c1"></span>  <span class="s">&#34;ClientSecret&#34;</span><span class="p">:</span> <span class="s">&#34;C2k.xytz..........&#34;</span><span class="p">,</span> <span class="c1">// Client secret you created
+</span></span><span class="hl"><span class="c1"></span>  <span class="s">&#34;CertificateName&#34;</span><span class="p">:</span> <span class="s">&#34;[Or instead of client secret: Enter here the name of a certificate (from the user cert store) as registered with your application]&#34;</span><span class="p">,</span>
+</span><span class="hl">  <span class="s">&#34;TargetApiBaseAddress&#34;</span><span class="p">:</span> <span class="s">&#34;https://localhost:5001&#34;</span><span class="p">,</span> <span class="c1">// URL of the target api
+</span></span><span class="hl"><span class="c1"></span>  <span class="s">&#34;TargetApiScope&#34;</span><span class="p">:</span> <span class="s">&#34;api://527873d0-f306-435e-aca6-db325e9e0e44/.default&#34;</span> <span class="c1">// default scope of the target api
+</span></span><span class="hl"><span class="c1"></span><span class="p">}</span>
+</span></code></pre></td></tr></table>
+</div>
+</div><p>With this configuration you&rsquo;ll able to run the console app and call the API.</p>
+<h3 id="step4-create-a-react-app-to-access-the-secure-web-api">Step4: Create a react app to access the secure web-api</h3>
+</div>
+        <div class="post-footer">
+            <div class="info">
+                <span class="separator"><a class="category" href="/categories/webapi/">webapi</a><a class="category" href="/categories/logging/">logging</a></span>
+
+                <span class="separator"><a class="tag" href="/tags/dotnetcore/">dotnetcore</a><a class="tag" href="/tags/nlog/">NLog</a><a class="tag" href="/tags/aspnetcore/">aspnetcore</a></span>
+
+            </div>
+        </div>
+
+        
+    </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"
+        src="https://codesharerepeat.github.io/js/jquery.min.86b1e8f819ee2d9099a783e50b49dff24282545fc40773861f9126b921532e4c.js"
+        integrity="sha256-hrHo&#43;BnuLZCZp4PlC0nf8kKCVF/EB3OGH5EmuSFTLkw="
+        crossorigin="anonymous"></script>
+
+
+
+
+<script type="text/javascript"
+        src="https://codesharerepeat.github.io/js/bundle.min.0f9c74cb78f13d1f15f33daff4037c70354f98acfbb97a6f61708966675c3cae.js"
+        integrity="sha256-D5x0y3jxPR8V8z2v9AN8cDVPmKz7uXpvYXCJZmdcPK4="
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript"
+        src="https://codesharerepeat.github.io/js/medium-zoom.min.92f21c856129f84aeb719459b3e6ac621a3032fd7b180a18c04e1d12083f8aba.js"
+        integrity="sha256-kvIchWEp&#43;ErrcZRZs&#43;asYhowMv17GAoYwE4dEgg/iro="
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

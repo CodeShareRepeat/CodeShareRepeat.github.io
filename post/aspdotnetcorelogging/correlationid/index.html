@@ -53,7 +53,8 @@
 <meta name="twitter:image" content="https://codesharerepeat.github.io/images/site-feature-image.png"/>
 
 <meta name="twitter:title" content="WebApi Logging Part 2: Correlation-ID with ASP.NET Core WebApi and NLog"/>
-<meta name="twitter:description" content="A correlation-ID is mostly the same like an transaction-id in the SQL World. I use it for logging and error analysis.
+<meta name="twitter:description" content="The code can be found here
+ A correlation-ID is mostly the same like an transaction-id in the SQL World. I use it for logging and error analysis.
  Whithout a correlation id you are totaly lost in your log!"/>
 
 </head>
@@ -143,7 +144,10 @@
                 
             </div>
 
-            <p>A correlation-ID is mostly the same like an transaction-id in the SQL World. I use it for logging and error analysis.</p>
+            <blockquote>
+<p>The code can be found <a href="https://github.com/CodeShareRepeat/CorrelationID">here</a></p>
+</blockquote>
+<p>A correlation-ID is mostly the same like an transaction-id in the SQL World. I use it for logging and error analysis.</p>
 <blockquote>
 <p><strong>Whithout a correlation id you are totaly lost in your log!</strong></p>
 </blockquote>
@@ -239,7 +243,7 @@
 <pre class="chroma"><code class="language-cs" data-lang="cs">        <span class="k">private</span> <span class="k">static</span> <span class="n">Guid</span> <span class="n">GetOrCreateCorrelationId</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">)</span>
         <span class="p">{</span>
 <span class="hl">            <span class="kt">var</span> <span class="n">header</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Headers</span><span class="p">[</span><span class="n">CorrelationHeaderPropName</span><span class="p">];</span>
-</span>            
+</span>
             <span class="kt">var</span> <span class="n">correlationId</span> <span class="p">=</span> <span class="n">Guid</span><span class="p">.</span><span class="n">NewGuid</span><span class="p">();</span>
 
             <span class="k">if</span> <span class="p">(</span><span class="n">header</span><span class="p">.</span><span class="n">Count</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span>
@@ -249,14 +253,14 @@
                     <span class="n">correlationId</span> <span class="p">=</span> <span class="n">correlationIdFromHeader</span><span class="p">;</span>
                 <span class="p">}</span>
             <span class="p">}</span>
-           
+
             <span class="k">return</span> <span class="n">correlationId</span><span class="p">;</span>
-           
+
         <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>This method must be used in the middleware <strong>Invoke</strong> method. I addition you see in line 16-21 ,that with every response the correlation-Id is added to the response header.
-I highly revomend this, so you can</p>
+I highly revomend this, so you can use the correlation-Id in the client for further handling.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">10
@@ -285,7 +289,7 @@ I highly revomend this, so you can</p>
 </span><span class="hl"><span class="c1"></span>            <span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">OnStarting</span><span class="p">(()</span> <span class="p">=&gt;</span>
 </span><span class="hl">            <span class="p">{</span>
 </span><span class="hl">                <span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">CorrelationHeaderPropName</span><span class="p">,</span> <span class="k">new</span><span class="p">[]</span> <span class="p">{</span> <span class="n">Trace</span><span class="p">.</span><span class="n">CorrelationManager</span><span class="p">.</span><span class="n">ActivityId</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span> <span class="p">});</span>
-</span><span class="hl">                                               
+</span><span class="hl">
 </span><span class="hl">                <span class="k">return</span> <span class="n">Task</span><span class="p">.</span><span class="n">CompletedTask</span><span class="p">;</span>
 </span><span class="hl">            <span class="p">});</span>
 </span>

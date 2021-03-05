@@ -13,7 +13,8 @@
       <pubDate>Sun, 07 Feb 2021 21:05:04 +0100</pubDate>
       
       <guid>https://codesharerepeat.github.io/post/aspdotnetcorelogging/correlationid/</guid>
-      <description>A correlation-ID is mostly the same like an transaction-id in the SQL World. I use it for logging and error analysis.
+      <description>The code can be found here
+ A correlation-ID is mostly the same like an transaction-id in the SQL World. I use it for logging and error analysis.
  Whithout a correlation id you are totaly lost in your log!</description>
     </item>
     

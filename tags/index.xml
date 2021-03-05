@@ -6,20 +6,20 @@
     <description>Recent content in Tags on Website of Chris König</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 07 Feb 2021 21:05:04 +0100</lastBuildDate><atom:link href="https://codesharerepeat.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 20 Feb 2021 21:05:04 +0100</lastBuildDate><atom:link href="https://codesharerepeat.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>apnetcore web api</title>
-      <link>https://codesharerepeat.github.io/tags/apnetcore-web-api/</link>
-      <pubDate>Sun, 07 Feb 2021 21:05:04 +0100</pubDate>
+      <title>aspnetcore</title>
+      <link>https://codesharerepeat.github.io/tags/aspnetcore/</link>
+      <pubDate>Sat, 20 Feb 2021 21:05:04 +0100</pubDate>
       
-      <guid>https://codesharerepeat.github.io/tags/apnetcore-web-api/</guid>
+      <guid>https://codesharerepeat.github.io/tags/aspnetcore/</guid>
       <description></description>
     </item>
     
     <item>
       <title>dotnetcore</title>
       <link>https://codesharerepeat.github.io/tags/dotnetcore/</link>
-      <pubDate>Sun, 07 Feb 2021 21:05:04 +0100</pubDate>
+      <pubDate>Sat, 20 Feb 2021 21:05:04 +0100</pubDate>
       
       <guid>https://codesharerepeat.github.io/tags/dotnetcore/</guid>
       <description></description>
@@ -28,9 +28,18 @@
     <item>
       <title>NLog</title>
       <link>https://codesharerepeat.github.io/tags/nlog/</link>
-      <pubDate>Sun, 07 Feb 2021 21:05:04 +0100</pubDate>
+      <pubDate>Sat, 20 Feb 2021 21:05:04 +0100</pubDate>
       
       <guid>https://codesharerepeat.github.io/tags/nlog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>apnetcore web api</title>
+      <link>https://codesharerepeat.github.io/tags/apnetcore-web-api/</link>
+      <pubDate>Sun, 07 Feb 2021 21:05:04 +0100</pubDate>
+      
+      <guid>https://codesharerepeat.github.io/tags/apnetcore-web-api/</guid>
       <description></description>
     </item>
     
